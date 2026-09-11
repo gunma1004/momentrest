@@ -62,9 +62,11 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
   const regionName = region === "seoul" ? "서울" : region === "incheon" ? "인천" : "경기";
   const fullTitle = `${regionName} ${district} ${dong}`;
 
+  // 🌟 샵 슬러그와 이미지가 포함된 제휴샵 리스트
   const localShops = [
     {
       id: 1,
+      slug: "golden-therapy",
       name: `✨ ${fullTitle} 한국골든테라피`,
       desc: "VIP 골든 릴렉싱 & 딥티슈 피로회복! 베테랑 테라피스트의 품격 있는 1:1 맞춤 테라피 케어",
       phone: "0507-1280-3361",
@@ -73,6 +75,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
     },
     {
       id: 2,
+      slug: "miin-therapy",
       name: `🌸 ${fullTitle} 한국미인테라피`,
       desc: "최고급 천연 오일을 활용한 감성 스웨디시 & 아로마 전신 림프 순환 맞춤 프로그램",
       phone: "0507-1280-3303",
@@ -81,6 +84,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
     },
     {
       id: 3,
+      slug: "juju-therapy",
       name: `💎 ${fullTitle} 주주테라피`,
       desc: "재방문율 1위 만족도! 철저한 위생 관리와 프라이빗 힐링 바디케어 서비스",
       phone: "0507-1280-3193",
@@ -89,6 +93,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
     },
     {
       id: 4,
+      slug: "queens-home-therapy",
       name: `👑 ${fullTitle} 퀸즈홈테라피`,
       desc: "여왕처럼 누리는 VIP 홈케어! 전문 힐러들의 체형 맞춤형 피로회복 프로그램",
       phone: "0507-1280-3334",
@@ -97,6 +102,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
     },
     {
       id: 5,
+      slug: "night-therapy",
       name: `🌙 ${fullTitle} 오늘밤테라피`,
       desc: "편안한 휴식과 안심 힐링! 수도권 전지역 신속한 방문으로 지친 일상의 피로 회복",
       phone: "0507-1280-3223",
@@ -106,7 +112,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
   ];
 
   return (
-    <div className="bg-[#fff5f7] text-[#2f3542] min-h-screen flex flex-col font-sans selection:bg-pink-400 selection:text-white">
+    <div className="bg-[#fff5f7] text-[#2f3542] min-h-screen flex flex-col font-sans selection:bg-pink-400 selection:text-white pb-24">
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1 space-y-12">
         
         {/* 상단 지역 대표 배너 */}
@@ -124,7 +130,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* 제휴업체 5개 카드리스트 */}
+        {/* 제휴업체 5개 카드리스트 (상세 페이지 링크 포함) */}
         <section className="space-y-6">
           <div className="text-center">
             <p className="text-xs text-pink-600 font-bold tracking-widest uppercase">RECOMMENDED PARTNERS</p>
@@ -136,6 +142,18 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {localShops.map((lShop) => (
               <div key={lShop.id} className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all group relative">
+                {/* 🌟 동 페이지에서 샵 상세 페이지로 넘어가는 링크 */}
+                <Link 
+                  href={`/${region}/${encodeURIComponent(district)}/${encodeURIComponent(dong)}/${lShop.slug}`} 
+                  className="absolute inset-0 z-10" 
+                  aria-label={`${lShop.name} 상세페이지 보기`} 
+                />
+                
+                <img 
+                  src={lShop.image} 
+                  alt={lShop.name} 
+                  className="w-20 h-20 md:w-24 md:h-24 rounded-xl object-cover border border-pink-100 group-hover:scale-105 transition-transform" 
+                />
                 <div className="flex-1 min-w-0">
                   <h3 className="font-extrabold text-sm md:text-base text-gray-900 truncate group-hover:text-pink-600 transition-colors">
                     {lShop.name}
