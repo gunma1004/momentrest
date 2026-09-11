@@ -10,7 +10,7 @@ interface PageProps {
   }>;
 }
 
-// 5개 제휴샵 전체 데이터
+// 🌟 요청해주신 실제 코스 및 가격 정보가 모두 반영된 5개 제휴샵 데이터
 const shopData: Record<string, {
   name: string;
   phone: string;
@@ -35,12 +35,22 @@ const shopData: Record<string, {
     desc: "골든 품격의 감성 릴렉싱! 전문 관리사와 프리미엄 힐러진이 선사하는 맞춤형 바디케어.",
     courses: [
       {
-        category: "👑 프리미엄 스웨디시 & 아로마",
-        badge: "BEST 시그니처",
-        desc: "최고급 천연 오일과 전문 테라피스트의 수준 높은 1:1 감성 림프 순환 케어.",
+        category: "✨ 스웨디시 코스",
+        badge: "BEST",
+        desc: "부드럽고 감성적인 터치로 심신을 포근하게 녹여주는 프리미엄 힐링 코스.",
         items: [
-          { time: "60분", price: "80,000원" },
-          { time: "90분", price: "100,000원", recommend: true }
+          { time: "60분", price: "140,000원" },
+          { time: "90분", price: "190,000원", recommend: true }
+        ]
+      },
+      {
+        category: "👑 프리미엄 코스",
+        badge: "RECOMMEND",
+        desc: "지친 피로를 효율적으로 풀어주는 실속 만점 맞춤형 바디케어.",
+        items: [
+          { time: "60분", price: "110,000원" },
+          { time: "90분", price: "130,000원" },
+          { time: "120분", price: "150,000원", recommend: true }
         ]
       }
     ],
@@ -55,12 +65,30 @@ const shopData: Record<string, {
     desc: "천연 오일과 전문 테라피스트의 섬세한 터치로 지친 일상의 피로를 말끔히 풀어드립니다.",
     courses: [
       {
-        category: "🌸 아로마 림프 순환 케어",
-        badge: "POPULAR",
-        desc: "지친 심신에 활력을 불어넣어 주는 부드럽고 편안한 힐링 코스.",
+        category: "🌸 아로디시",
+        desc: "심신을 편안하게 이완시켜 주는 향긋한 아로마 테라피 코스.",
         items: [
-          { time: "60분", price: "70,000원" },
-          { time: "90분", price: "90,000원", recommend: true }
+          { time: "90분", price: "100,000원" },
+          { time: "120분", price: "130,000원", recommend: true }
+        ]
+      },
+      {
+        category: "💎 VIP 스웨디시",
+        badge: "BEST",
+        desc: "최고급 감성 림프 순환 케어로 극상의 휴식을 선사합니다.",
+        items: [
+          { time: "60분", price: "110,000원" },
+          { time: "90분", price: "130,000원", recommend: true },
+          { time: "120분", price: "150,000원" }
+        ]
+      },
+      {
+        category: "👑 한국인 스웨디시",
+        badge: "POPULAR",
+        desc: "실력파 한국인 관리사의 디테일하고 품격 있는 맞춤 케어.",
+        items: [
+          { time: "60분", price: "140,000원" },
+          { time: "90분", price: "180,000원", recommend: true }
         ]
       }
     ],
@@ -75,12 +103,58 @@ const shopData: Record<string, {
     desc: "철저한 위생 관리와 프라이빗 힐링 바디케어 서비스로 높은 만족도를 선사합니다.",
     courses: [
       {
-        category: "💎 프라이빗 바디케어",
-        badge: "SPECIAL",
-        desc: "일상의 스트레스를 해소하는 1:1 맞춤형 릴렉싱 테라피.",
+        category: "🍌 타이코스",
+        desc: "시원한 스트레칭과 전신 근육 이완 케어.",
         items: [
           { time: "60분", price: "60,000원" },
-          { time: "90분", price: "80,000원", recommend: true }
+          { time: "90분", price: "80,000원" },
+          { time: "120분", price: "100,000원" }
+        ]
+      },
+      {
+        category: "🍌 전신아로마",
+        desc: "부드러운 오일링으로 림프 순환을 돕는 힐링 코스.",
+        items: [
+          { time: "60분", price: "70,000원" },
+          { time: "90분", price: "90,000원" },
+          { time: "120분", price: "110,000원" }
+        ]
+      },
+      {
+        category: "🍌 VIP 감성힐링코스",
+        badge: "★추천",
+        desc: "지친 일상에 활력을 불어넣어 주는 감성 충만 릴렉싱.",
+        items: [
+          { time: "60분", price: "90,000원" },
+          { time: "90분", price: "110,000원", recommend: true },
+          { time: "120분", price: "130,000원" }
+        ]
+      },
+      {
+        category: "🍌 VIP 스페셜코스",
+        badge: "★추천",
+        desc: "더 깊은 휴식과 프리미엄 만족감을 주는 스페셜 케어.",
+        items: [
+          { time: "60분", price: "100,000원" },
+          { time: "90분", price: "120,000원", recommend: true },
+          { time: "120분", price: "140,000원" }
+        ]
+      },
+      {
+        category: "🍌 VIP 프리미엄 코스",
+        badge: "SPECIAL",
+        desc: "타이 & 아로마 & 풋코스가 모두 포함된 종합 힐링 패키지.",
+        items: [
+          { time: "150분", price: "160,000원", recommend: true }
+        ]
+      },
+      {
+        category: "🍌 한국인 스웨디시",
+        badge: "BEST",
+        desc: "한국인 전문 테라피스트의 명품 스웨디시 관리.",
+        items: [
+          { time: "60분", price: "140,000원" },
+          { time: "90분", price: "180,000원", recommend: true }
         ]
       }
     ],
@@ -95,12 +169,50 @@ const shopData: Record<string, {
     desc: "여왕처럼 누리는 VIP 홈케어! 전문 힐러들의 체형 맞춤형 피로회복 프로그램.",
     courses: [
       {
-        category: "👑 퀸즈 맞춤 홈케어",
-        badge: "RECOMMEND",
-        desc: "원하시는 장소에서 편안하게 받아보는 최고급 방문 테라피.",
+        category: "🌿 건식 힐링 코스",
+        desc: "뭉친 근육을 시원하게 풀어주는 정통 건식 바디케어.",
         items: [
           { time: "60분", price: "60,000원" },
-          { time: "90분", price: "80,000원", recommend: true }
+          { time: "90분", price: "80,000원" },
+          { time: "120분", price: "100,000원" }
+        ]
+      },
+      {
+        category: "🌸 아로마 힐링 코스",
+        desc: "향기로운 오일과 함께하는 부드러운 전신 순환 케어.",
+        items: [
+          { time: "60분", price: "70,000원" },
+          { time: "90분", price: "80,000원" },
+          { time: "120분", price: "100,000원" }
+        ]
+      },
+      {
+        category: "💎 힐링스웨디시 코스",
+        badge: "POPULAR",
+        desc: "섬세하고 부드러운 감성 테라피로 피로 해소.",
+        items: [
+          { time: "60분", price: "80,000원" },
+          { time: "90분", price: "100,000원", recommend: true },
+          { time: "120분", price: "120,000원" }
+        ]
+      },
+      {
+        category: "👑 VIP 스페셜코스",
+        badge: "RECOMMEND",
+        desc: "최상급 퀄리티로 누리는 특별한 프리미엄 힐링.",
+        items: [
+          { time: "60분", price: "100,000원" },
+          { time: "90분", price: "120,000원" },
+          { time: "120분", price: "150,000원", recommend: true }
+        ]
+      },
+      {
+        category: "✨ 한국 관리사 코스",
+        badge: "BEST",
+        desc: "실력파 한국인 관리사의 완벽한 1:1 맞춤 케어.",
+        items: [
+          { time: "60분", price: "150,000원" },
+          { time: "90분", price: "180,000원", recommend: true }
         ]
       }
     ],
@@ -115,12 +227,42 @@ const shopData: Record<string, {
     desc: "편안한 휴식과 안심 힐링! 수도권 전지역 신속한 방문으로 지친 일상의 피로 회복.",
     courses: [
       {
-        category: "🌙 야간 힐링 바디케어",
-        badge: "NIGHT",
-        desc: "늦은 시간에도 편안하게 이용할 수 있는 신속 방문 힐링 프로그램.",
+        category: "📌 팬클럽 건식테라피",
+        desc: "지친 몸의 긴장을 풀어주는 기본에 충실한 건식 케어.",
         items: [
           { time: "60분", price: "60,000원" },
-          { time: "90분", price: "80,000원", recommend: true }
+          { time: "90분", price: "80,000원" },
+          { time: "120분", price: "90,000원" }
+        ]
+      },
+      {
+        category: "📌 열혈팬 센슈얼스웨디시",
+        badge: "POPULAR",
+        desc: "감미롭고 부드러운 터치의 센슈얼 스웨디시 코스.",
+        items: [
+          { time: "60분", price: "90,000원" },
+          { time: "90분", price: "110,000원", recommend: true },
+          { time: "120분", price: "130,000원" }
+        ]
+      },
+      {
+        category: "📌 회장님 전신혼합VVIP",
+        badge: "BEST",
+        desc: "건식과 아로마의 장점을 결합한 최고급 혼합 VVIP 프로그램.",
+        items: [
+          { time: "60분", price: "100,000원" },
+          { time: "90분", price: "120,000원" },
+          { time: "120분", price: "140,000원", recommend: true },
+          { time: "150분", price: "180,000원" }
+        ]
+      },
+      {
+        category: "📌 한국인 센슈얼스웨디시",
+        badge: "RECOMMEND",
+        desc: "한국인 관리사의 전문적이고 세심한 하이엔드 테라피.",
+        items: [
+          { time: "60분", price: "140,000원" },
+          { time: "90분", price: "180,000원", recommend: true }
         ]
       }
     ],
