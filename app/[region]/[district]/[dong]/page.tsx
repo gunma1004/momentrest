@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ClientTextMixerInline } from "../../../[district]/ClientTextMixerInline"; // 만약 경로가 다르면 기존 임포트 유지
 
 interface PageProps {
   params: Promise<{
@@ -50,7 +49,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  // sitemap이나 라우팅에 맞춘 기본 빌드 대상 (필요에 따라 빈 배열 또는 주요 경로 반환)
   return [];
 }
 
