@@ -199,7 +199,7 @@ export async function generateStaticParams() {
 
     { region: 'incheon', district: '제물포구' }, { region: 'incheon', district: '영종구' }, { region: 'incheon', district: '미추홀구' }, { region: 'incheon', district: '연수구' },
     { region: 'incheon', district: '남동구' }, { region: 'incheon', district: '부평구' }, { region: 'incheon', district: '계양구' }, { region: 'incheon', district: '서해구' },
-    { region: 'incheon', district: '검단동' }, { region: 'incheon', district: '강화군' }, { region: 'incheon', district: '옹진군' }
+    { region: 'incheon', district: '검단구' }, { region: 'incheon', district: '강화군' }, { region: 'incheon', district: '옹진군' }
   ];
 
   return regionList.map((item) => ({

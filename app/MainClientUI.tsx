@@ -95,18 +95,17 @@ export const regionData: Record<string, { name: string; districts: Record<string
       bupyeong: { name: "부평구", dongs: ["부평1동", "부평2동", "부평3동", "부평4동", "부평5동", "부평6동", "산곡1동", "산곡2동", "산곡3동", "산곡4동", "청천1동", "청천2동", "갈산1동", "갈산2동", "삼산1동", "삼산2동", "부개1동", "부개2동", "부개3동", "일신동", "십정1동", "십정2동"] },
       gyeyang: { name: "계양구", dongs: ["효성1동", "효성2동", "계산1동", "계산2동", "계산3동", "계산4동", "작전1동", "작전2동", "작전서운동", "계양1동", "계양2동", "계양3동"] },
       seohae: { name: "서해구", dongs: ["만석동", "화수1.화평동", "화수2동", "송현1.2동", "송현3동", "송림1동", "송림2동", "송림3.5동", "송림4동", "송림6동", "금창동"] },
-      geomdan: { name: "검단동", dongs: ["검단동", "불로대곡동", "원당동", "당하동", "오류왕길동", "마전동", "아라동"] },
+      geomdan: { name: "검단구", dongs: ["검단동", "불로대곡동", "원당동", "당하동", "오류왕길동", "마전동", "아라동"] },
       ganghwa: { name: "강화군", dongs: ["강화읍", "선원면", "불은면", "길상면", "화도면", "양도면", "내가면", "하점면", "양사면", "송해면", "교동면", "삼산면", "서도면"] },
       ongjin: { name: "옹진군", dongs: ["북도면", "연평면", "백령면", "대청면", "덕적면", "자월면", "영흥면"] }
     }
   }
 };
 
-// 추천 제휴샵 목록 (slug 필드를 추가하여 새 주소 체계와 매핑)
+// 메인 추천 제휴샵 목록 (클릭 링크 없이 정보 및 전화예약만 제공)
 const defaultShops = [
   {
     id: 1,
-    slug: "golden-therapy",
     name: "✨ 한국골든테라피",
     desc: "서울·경기·인천 전지역 신속 케어! VIP 골든 릴렉싱 & 딥티슈 피로회복 전문",
     phone: "0507-1280-3361",
@@ -115,7 +114,6 @@ const defaultShops = [
   },
   {
     id: 2,
-    slug: "miin-therapy",
     name: "🌸 한국미인테라피",
     desc: "품격 있는 힐링을 선사하는 최고급 천연 오일 스웨디시 & 아로마 맞춤 케어",
     phone: "0507-1280-3303",
@@ -124,7 +122,6 @@ const defaultShops = [
   },
   {
     id: 3,
-    slug: "juju-therapy",
     name: "💎 주주테라피",
     desc: "재방문율 1위 만족도! 철저한 위생 관리와 감성 충만 프라이빗 힐링 코스",
     phone: "0507-1280-3193",
@@ -133,7 +130,6 @@ const defaultShops = [
   },
   {
     id: 4,
-    slug: "queens-home-therapy",
     name: "👑 퀸즈홈테라피",
     desc: "여왕처럼 누리는 프리미엄 바디케어! 전문 힐러들의 1:1 VIP 힐링 프로그램",
     phone: "0507-1280-3334",
@@ -142,7 +138,6 @@ const defaultShops = [
   },
   {
     id: 5,
-    slug: "night-therapy",
     name: "🌙 오늘밤테라피",
     desc: "편안한 휴식과 안심 힐링! 지친 일상 끝에 완벽한 피로 회복을 선사하는 맞춤 테라피",
     phone: "0507-1280-3223",
@@ -157,7 +152,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
     <div className="bg-white rounded-2xl border border-pink-200 overflow-hidden transition-all hover:border-pink-400 shadow-sm">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-4 text-left flex justify-between items-center font-bold text-sm text-gray-800 hover:text-pink-600 transition-colors"
+        className="w-full p-4 text-left flex justify-between items-center font-bold text-sm text-gray-800 hover:text-pink-600 transition-colors cursor-pointer"
       >
         <span className="flex items-center gap-2">
           <span className="text-pink-500 font-extrabold">Q.</span> {question}
@@ -208,7 +203,6 @@ export default function MainClientUI() {
     const districtObj = regionData[selectedRegion]?.districts[selectedDistrict];
     const districtName = districtObj ? districtObj.name : selectedDistrict;
     
-    // 도메인주소 /시/구/동 형식으로 이동
     const baseUrl = `/${selectedRegion}/${encodeURIComponent(districtName)}`;
     const targetUrl = selectedDong 
       ? `${baseUrl}/${encodeURIComponent(selectedDong)}` 
@@ -271,7 +265,7 @@ export default function MainClientUI() {
           </div>
         </section>
 
-        {/* 2. 프리미엄 추천 제휴 파트너 (샵 카드 클릭 시 지역 정보와 함께 새 주소 체계로 이동하도록 설정 가능) */}
+        {/* 2. 프리미엄 추천 제휴 파트너 (메인 페이지이므로 샵 카드 링크를 제거하고 전화예약만 제공) */}
         <section className="space-y-6">
           <div className="text-center mb-6 space-y-1">
             <span className="text-xs text-pink-600 font-black tracking-widest uppercase bg-pink-100 px-3 py-1 rounded-full border border-pink-300">
@@ -287,22 +281,19 @@ export default function MainClientUI() {
             {displayShops.map((lShop) => (
               <div 
                 key={lShop.id} 
-                className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all duration-300 hover:shadow-[0_10px_25px_rgba(255,107,129,0.15)] group relative overflow-hidden"
+                className="bg-white border border-pink-200 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all duration-300 hover:shadow-[0_10px_25px_rgba(255,107,129,0.15)] relative overflow-hidden"
               >
-                {/* 샵 상세 링크를 기본 서울/강남구 기준 등으로 연결하거나 동적 라우팅으로 매핑 */}
-                <Link href={`/seoul/강남구/${lShop.slug}`} className="absolute inset-0 z-10" aria-label={`${lShop.name} 상세페이지 보기`} />
-
                 <div className="relative overflow-hidden rounded-xl border border-pink-100 shrink-0">
                   <img 
                     src={lShop.image} 
                     alt={lShop.name} 
-                    className="w-20 h-20 md:w-24 md:h-24 object-cover group-hover:scale-110 transition-transform duration-500" 
+                    className="w-20 h-20 md:w-24 md:h-24 object-cover" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                 </div>
 
                 <div className="flex-1 min-w-0 space-y-1">
-                  <h3 className="font-extrabold text-sm md:text-base text-gray-900 truncate group-hover:text-pink-600 transition-colors">
+                  <h3 className="font-extrabold text-sm md:text-base text-gray-900 truncate">
                     {lShop.name}
                   </h3>
                   <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
@@ -312,9 +303,12 @@ export default function MainClientUI() {
                     <span className="text-xs font-black text-pink-600 bg-pink-50 px-2 py-0.5 rounded border border-pink-200">
                       {lShop.price}
                     </span>
-                    <span className="bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black text-xs px-3.5 py-1.5 rounded-xl shadow group-hover:shadow-[0_0_15px_rgba(255,107,129,0.4)] transition-all relative z-20">
+                    <a 
+                      href={`tel:${lShop.phone}`}
+                      className="bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black text-xs px-3.5 py-1.5 rounded-xl shadow transition-all transform active:scale-95"
+                    >
                       전화예약 📞
-                    </span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -438,7 +432,7 @@ export default function MainClientUI() {
                 <span className="text-[11px] text-gray-400">서울 직장인</span>
               </div>
               <p className="text-xs text-gray-600 leading-relaxed">
-                &quot;시간 약속도 정확하시고 테라피스트 분 실력이 너무 좋으셨어요. 뭉친 어깨와 피로가 싹 풀려서 주기적으로 이용 중입니다!&quot;
+                "시간 약속도 정확하시고 테라피스트 분 실력이 너무 좋으셨어요. 뭉친 어깨와 피로가 싹 풀려서 주기적으로 이용 중입니다!"
               </p>
             </div>
             <div className="bg-white p-5 rounded-2xl border border-pink-200 space-y-2 shadow-sm">
@@ -447,7 +441,7 @@ export default function MainClientUI() {
                 <span className="text-[11px] text-gray-400">경기 이용자</span>
               </div>
               <p className="text-xs text-gray-600 leading-relaxed">
-                &quot;친절한 응대와 꼼꼼한 맞춤 테라피 덕분에 몸과 마음이 모두 가벼워졌습니다. 위생 상태도 매우 만족스러웠어요.&quot;
+                "친절한 응대와 꼼꼼한 맞춤 테라피 덕분에 몸과 마음이 모두 가벼워졌습니다. 위생 상태도 매우 만족스러웠어요."
               </p>
             </div>
           </div>
