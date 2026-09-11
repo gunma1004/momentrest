@@ -10,7 +10,7 @@ interface PageProps {
   }>;
 }
 
-// 🌟 요청해주신 실제 코스 및 가격 정보가 모두 반영된 5개 제휴샵 데이터
+// 5개 제휴샵 전체 데이터
 const shopData: Record<string, {
   name: string;
   phone: string;
@@ -321,7 +321,7 @@ export default async function ShopDetailPage({ params }: PageProps) {
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1 space-y-8">
         
-        {/* 샵 타이틀 카드 */}
+        {/* 샵 타이틀 카드 (지역명과 샵 이름 사이에 띄어쓰기 적용) */}
         <section className="bg-white border border-pink-200 rounded-3xl p-6 md:p-8 shadow-sm space-y-4">
           <div className="flex flex-col md:flex-row gap-6 items-center">
             <img 
