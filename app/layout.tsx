@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   // 🌟 네이버 서치어드바이저 소유권 확인 메타 태그 (필요시 기존 코드 유지)
   other: {
-    "naver-site-verification": "88fcbdafe3b38905f47676300442497e64c4663f",
+    "naver-site-verification": "54151eda21b1ba8f42df6306d48f226d92068077",
   },
 };
 
