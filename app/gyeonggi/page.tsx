@@ -52,8 +52,8 @@ export default function GyeonggiMainPage() {
                 key={shop.id}
                 className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all relative overflow-hidden group"
               >
-                {/*새로운 주소 체계 슬러그 연동 (예시: 수원시 기준 또는 기본 지역 경로) */}
-                <Link href={`/gyeonggi/수원시 장안구/${shop.slug}`} className="absolute inset-0 z-10" aria-label={`${shop.name} 상세페이지 보기`} />
+                {/* 🌟 SHOP 경로가 포함된 주소 체계 연동 */}
+                <Link href={`/gyeonggi/수원시 장안구/SHOP/${shop.slug}`} className="absolute inset-0 z-10" aria-label={`${shop.name} 상세페이지 보기`} />
                 <div className="relative overflow-hidden rounded-xl border border-pink-100 shrink-0">
                   <img src={shop.image} alt={shop.name} className="w-20 h-20 md:w-24 md:h-24 object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>

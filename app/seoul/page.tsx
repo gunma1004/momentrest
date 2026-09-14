@@ -149,8 +149,8 @@ export default function SeoulPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {seoulShops.map((lShop: Shop) => (
               <div key={lShop.id} className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all group relative">
-                {/* 새로운 주소 체계 슬러그 연동 (예시: 강남구 기준) */}
-                <Link href={`/seoul/강남구/${lShop.slug}`} className="absolute inset-0 z-10" aria-label={`${lShop.name} 상세페이지 보기`} />
+                {/* 🌟 SHOP 경로가 포함된 주소 체계 연동 */}
+                <Link href={`/seoul/강남구/SHOP/${lShop.slug}`} className="absolute inset-0 z-10" aria-label={`${lShop.name} 상세페이지 보기`} />
                 <img 
                   src={lShop.image} 
                   alt={lShop.name} 

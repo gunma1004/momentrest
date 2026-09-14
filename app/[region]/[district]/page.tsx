@@ -317,7 +317,7 @@ export default async function RegionalDetailPage({ params, searchParams }: PageP
         {/* 클라이언트 사이드 키워드 믹서 영역 */}
         <ClientTextMixerInline locationText={fullTitle} />
 
-        {/* 제휴업체 5개 카드리스트 */}
+        {/* 제휴업체 5개 카드리스트 (SHOP 경로 반영) */}
         <section className="space-y-6">
           <div className="text-center">
             <p className="text-xs text-pink-600 font-bold tracking-widest uppercase">RECOMMENDED PARTNERS</p>
@@ -329,7 +329,12 @@ export default async function RegionalDetailPage({ params, searchParams }: PageP
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {localShops.map((lShop) => (
               <div key={lShop.id} className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all group relative">
-                <Link href={`/${region}/${encodeURIComponent(districtName)}/${lShop.slug}${dongName ? `?dong=${encodeURIComponent(dongName)}` : ""}`} className="absolute inset-0 z-10" aria-label={`${lShop.name} 상세페이지 보기`} />
+                {/* 🌟 샵 상세 링크에 SHOP 경로 추가 */}
+                <Link 
+                  href={`/${region}/${encodeURIComponent(districtName)}/SHOP/${lShop.slug}${dongName ? `?dong=${encodeURIComponent(dongName)}` : ""}`} 
+                  className="absolute inset-0 z-10" 
+                  aria-label={`${lShop.name} 상세페이지 보기`} 
+                />
                 <img 
                   src={lShop.image} 
                   alt={lShop.name} 
