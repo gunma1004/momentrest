@@ -139,7 +139,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {localShops.map((lShop) => (
               <div key={lShop.id} className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all group relative">
-                {/* 🌟 동 페이지에서 SHOP 경로를 거쳐 샵 상세 페이지로 이동 */}
+                {/* 🌟 동 단위 페이지에서 동 이름과 SHOP 경로를 거쳐 샵 상세 페이지로 이동 */}
                 <Link 
                   href={`/${region}/${encodeURIComponent(district)}/${encodeURIComponent(dong)}/SHOP/${lShop.slug}`} 
                   className="absolute inset-0 z-10" 

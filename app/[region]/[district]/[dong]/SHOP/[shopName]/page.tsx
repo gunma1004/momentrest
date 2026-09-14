@@ -5,11 +5,8 @@ interface PageProps {
   params: Promise<{
     region: string;
     district: string;
-    dong?: string;
+    dong: string;
     shopName: string;
-  }>;
-  searchParams: Promise<{
-    dong?: string;
   }>;
 }
 
@@ -273,25 +270,34 @@ const shopData: Record<string, {
   }
 };
 
-export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const resolvedSearchParams = await searchParams;
-  
   const { district, dong, shopName } = resolvedParams;
-  const searchDong = resolvedSearchParams.dong;
   
   const decodedDistrict = decodeURIComponent(district);
-  const decodedDong = dong ? decodeURIComponent(dong) : searchDong ? decodeURIComponent(searchDong) : "";
+  const decodedDong = decodeURIComponent(dong);
   const decodedShopSlug = decodeURIComponent(shopName);
 
   const shop = shopData[decodedShopSlug] || { name: "모먼트레스트 제휴점", phone: "0507-1280-3344" };
-  const locationPrefix = decodedDong ? `${decodedDistrict} ${decodedDong}` : decodedDistrict;
+  const locationPrefix = `${decodedDistrict} ${decodedDong}`;
   
   const charSum = (locationPrefix + shop.name + "momentrest_bypass_mix").split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const variantIndex = charSum % 30;
 
   const titleVariants = [
-   
+    `${locationPrefix} 출장 전문 힐링 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 방문 릴렉스 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 프라이빗 맞춤 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 웰니스 바디 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 케어 전신 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 스웨디시 힐링 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 아로마 오일 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 홈케어 맞춤 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 럭셔리 스파 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 감성 테라피 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 정통 바디 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 1:1 커스텀 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 안심 힐링 마사지 - ${shop.name}`,
     `${locationPrefix} 출장 프리미엄 케어 마사지 · ${shop.name}`,
     `${locationPrefix} 출장 소프트 릴렉싱 마사지 - ${shop.name}`,
     `${locationPrefix} 출장 신속방문 스웨디시 마사지 | ${shop.name}`,
@@ -368,23 +374,21 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   };
 }
 
-export default async function ShopDetailPage({ params, searchParams }: PageProps) {
+export default async function DongShopDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const resolvedSearchParams = await searchParams;
-
   const { region, district, dong, shopName } = resolvedParams;
-  const searchDong = resolvedSearchParams.dong;
   
   const decodedDistrict = decodeURIComponent(district);
-  const decodedDong = dong ? decodeURIComponent(dong) : searchDong ? decodeURIComponent(searchDong) : "";
+  const decodedDong = decodeURIComponent(dong);
   const decodedShopSlug = decodeURIComponent(shopName);
 
   const shop = shopData[decodedShopSlug] || shopData["golden-therapy"];
-  const locationPrefix = decodedDong ? `${decodedDistrict} ${decodedDong}` : decodedDistrict;
+  const locationPrefix = `${decodedDistrict} ${decodedDong}`;
 
   return (
     <div className="bg-[#fff5f7] text-[#2f3542] min-h-screen flex flex-col font-sans selection:bg-pink-400 selection:text-white pb-28">
       
+      {/* 상단 네비게이션 */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-pink-200 px-4 py-3 shadow-sm">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <Link href="/" className="text-base font-black text-pink-600">모먼트레스트</Link>
@@ -394,6 +398,7 @@ export default async function ShopDetailPage({ params, searchParams }: PageProps
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1 space-y-8">
         
+        {/* 샵 타이틀 카드 */}
         <section className="bg-white border border-pink-200 rounded-3xl p-6 md:p-8 shadow-sm space-y-4">
           <div className="flex flex-col md:flex-row gap-6 items-center">
             <img 
@@ -422,6 +427,7 @@ export default async function ShopDetailPage({ params, searchParams }: PageProps
           </div>
         </section>
 
+        {/* 코스 및 가격 안내 */}
         <section className="space-y-4">
           <h2 className="text-lg font-black text-gray-900 px-1">💰 프로그램 및 코스 요금표</h2>
           <div className="space-y-4">
@@ -454,6 +460,7 @@ export default async function ShopDetailPage({ params, searchParams }: PageProps
           </div>
         </section>
 
+        {/* 전화 예약 버튼 바 */}
         <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-pink-200 p-4 shadow-lg z-50">
           <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
             <div>
@@ -469,9 +476,10 @@ export default async function ShopDetailPage({ params, searchParams }: PageProps
           </div>
         </div>
 
+        {/* 이전 동 목록으로 돌아가기 */}
         <div className="text-center pt-4 pb-12">
-          <Link href={`/${region}/${encodeURIComponent(district)}${decodedDong ? `/${encodeURIComponent(decodedDong)}` : ""}`} className="text-xs text-gray-500 hover:text-pink-600 font-semibold transition-colors">
-            ← 이전 지역 목록으로 돌아가기
+          <Link href={`/${region}/${encodeURIComponent(district)}/${encodeURIComponent(dong)}`} className="text-xs text-gray-500 hover:text-pink-600 font-semibold transition-colors">
+            ← 이전 동 목록으로 돌아가기
           </Link>
         </div>
 

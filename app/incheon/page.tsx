@@ -29,8 +29,6 @@ export default function IncheonMainPage() {
   return (
     <div className="bg-[#fff5f7] text-[#2f3542] min-h-screen py-10 px-4 font-sans selection:bg-pink-400 selection:text-white pb-24">
       <div className="max-w-4xl mx-auto space-y-10">
-        
-        {/* 헤더 타이틀 */}
         <section className="text-center space-y-3 bg-white/85 backdrop-blur-md border border-pink-200 p-8 rounded-3xl shadow-sm">
           <span className="inline-block px-3.5 py-1 rounded-full bg-pink-100 border border-pink-300 text-pink-600 text-xs font-black tracking-widest uppercase">
             INCHEON INTEGRATED CARE
@@ -43,7 +41,6 @@ export default function IncheonMainPage() {
           </p>
         </section>
 
-        {/* 제휴업체 목록 그리드 */}
         <section className="space-y-4">
           <h2 className="text-lg font-black text-gray-800 px-1">🌊 인천 지역 입점 검증 제휴점</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -52,7 +49,7 @@ export default function IncheonMainPage() {
                 key={shop.id}
                 className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all relative overflow-hidden group"
               >
-                {/* 🌟 SHOP 경로가 포함된 주소 체계 연동 */}
+                {/* 🌟 인천 지역 SHOP 통합 경로 연결 */}
                 <Link href={`/incheon/미추홀구/SHOP/${shop.slug}`} className="absolute inset-0 z-10" aria-label={`${shop.name} 상세페이지 보기`} />
                 <div className="relative overflow-hidden rounded-xl border border-pink-100 shrink-0">
                   <img src={shop.image} alt={shop.name} className="w-20 h-20 md:w-24 md:h-24 object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -83,7 +80,6 @@ export default function IncheonMainPage() {
           </div>
         </section>
 
-        {/* 안심 보증 배너 */}
         <section className="bg-gradient-to-r from-pink-500 via-rose-400 to-pink-600 text-white p-6 md:p-8 rounded-3xl text-center space-y-4 shadow-lg">
           <h3 className="text-base md:text-xl font-black">
             🛡️ 인천 전지역 편안하고 안전한 프리미엄 웰니스 케어
@@ -101,13 +97,11 @@ export default function IncheonMainPage() {
           </div>
         </section>
 
-        {/* 홈으로 이동 */}
         <div className="text-center pt-2">
           <Link href="/" className="text-xs text-gray-500 hover:text-pink-600 transition-colors font-semibold">
             ← 모먼트레스트 메인 홈으로 돌아가기
           </Link>
         </div>
-
       </div>
     </div>
   );

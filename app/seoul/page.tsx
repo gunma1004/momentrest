@@ -33,7 +33,6 @@ export const metadata: Metadata = {
   },
 };
 
-// 🌟 타입스크립트 에러 방지를 위한 서울 지역 제휴숍 데이터 정의
 interface Shop {
   id: number;
   slug: string;
@@ -109,15 +108,12 @@ export default function SeoulPage() {
 
   return (
     <div className="bg-[#fff5f7] text-[#2f3542] min-h-screen flex flex-col font-sans selection:bg-pink-400 selection:text-white">
-      
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1 space-y-12">
-        
-        {/* 상단 서울 대표 배너 */}
         <section className="relative rounded-3xl overflow-hidden border border-pink-300 shadow-[0_10px_40px_rgba(255,107,129,0.15)] bg-gradient-to-b from-white to-[#fff0f3]">
           <img 
             src="/banner.jpg" 
@@ -137,7 +133,6 @@ export default function SeoulPage() {
           </div>
         </section>
 
-        {/* 제휴업체 카드리스트 */}
         <section className="space-y-6">
           <div className="text-center">
             <p className="text-xs text-pink-600 font-bold tracking-widest uppercase">SEOUL RECOMMENDED PARTNERS</p>
@@ -149,7 +144,7 @@ export default function SeoulPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {seoulShops.map((lShop: Shop) => (
               <div key={lShop.id} className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all group relative">
-                {/* 🌟 SHOP 경로가 포함된 주소 체계 연동 */}
+                {/* 🌟 서울 지역 SHOP 통합 경로 연결 */}
                 <Link href={`/seoul/강남구/SHOP/${lShop.slug}`} className="absolute inset-0 z-10" aria-label={`${lShop.name} 상세페이지 보기`} />
                 <img 
                   src={lShop.image} 
@@ -178,19 +173,13 @@ export default function SeoulPage() {
           </div>
         </section>
 
-        {/* 홈으로 돌아가기 */}
         <div className="text-center pt-4">
-          <Link 
-            href="/"
-            className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-pink-600 transition-colors font-semibold"
-          >
+          <Link href="/" className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-pink-600 transition-colors font-semibold">
             ← 모먼트레스트 메인 홈으로 돌아가기
           </Link>
         </div>
-
       </main>
 
-      {/* 푸터 영역 */}
       <footer className="bg-white border-t border-pink-200 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-4">
           <p className="text-gray-600 font-bold">모먼트레스트(MomentRest)는 건전하고 안전한 프리미엄 홈케어 & 힐링 테라피 정보 플랫폼입니다.</p>
