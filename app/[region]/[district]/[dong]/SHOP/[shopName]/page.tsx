@@ -5,8 +5,10 @@ interface PageProps {
   params: Promise<{
     region: string;
     district: string;
-    dong?: string;
     shopName: string;
+  }>;
+  searchParams: Promise<{
+    dong?: string;
   }>;
 }
 
@@ -270,9 +272,12 @@ const shopData: Record<string, {
   }
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const { district, dong, shopName } = resolvedParams;
+  const resolvedSearchParams = await searchParams;
+  
+  const { district, shopName } = resolvedParams;
+  const dong = resolvedSearchParams.dong;
   
   const decodedDistrict = decodeURIComponent(district);
   const decodedDong = dong ? decodeURIComponent(dong) : "";
@@ -281,12 +286,89 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const shop = shopData[decodedShopSlug] || { name: "모먼트레스트 제휴점", phone: "0507-1280-3344" };
   const locationPrefix = decodedDong ? `${decodedDistrict} ${decodedDong}` : decodedDistrict;
   
-  const pageTitle = `${locationPrefix} 출장 마사지 - ${shop.name}`;
-  const pageDescription = `${locationPrefix} 지역 프리미엄 방문 테라피. 선입금 없는 100% 후불제 안전 시스템 ${shop.name} 안내.`;
+  const charSum = (locationPrefix + shop.name + "momentrest_bypass_mix").split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const variantIndex = charSum % 30;
+
+  const titleVariants = [
+    `${locationPrefix} 출장 전문 힐링 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 방문 릴렉스 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 프라이빗 맞춤 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 웰니스 바디 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 케어 전신 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 스웨디시 힐링 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 아로마 오일 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 홈케어 맞춤 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 럭셔리 스파 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 감성 테라피 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 정통 바디 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 1:1 커스텀 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 안심 힐링 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 프리미엄 케어 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 소프트 릴렉싱 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 신속방문 스웨디시 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 전문 웰니스 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 딥티슈 바디 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 커스텀 아로마 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 VIP 힐링 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 스페셜 맞춤 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 안심 홈케어 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 프리미엄 릴렉스 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 피로해소 전신 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 맞춤형 스웨디시 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 힐링 테라피 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 실속형 바디 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 쾌적한 방문 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 종합 웰니스 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 최고급 감성 마사지 · ${shop.name}`
+  ];
+
+  const descriptionVariants = [
+    `${locationPrefix} 출장 전문 힐링 마사지 제휴처 ${shop.name}. 선입금 없는 100% 후불제 안전 시스템으로 편안한 휴식을 선사합니다.`,
+    `${locationPrefix} 출장 방문 릴렉스 마사지 서비스 안내. ${shop.name}에서 검증된 전문 관리사와 함께 지친 피로를 날려보세요.`,
+    `${locationPrefix} 출장 프라이빗 맞춤 마사지 솔루션. ${shop.name}의 품격 있는 1:1 커스텀 코스를 지금 바로 만나보세요.`,
+    `${locationPrefix} 출장 웰니스 바디 마사지 전문점 ${shop.name}. 신속한 방문과 정직한 정찰제로 안심하고 이용하실 수 있습니다.`,
+    `${locationPrefix} 출장 케어 전신 마사지 안내. ${shop.name}에서 제공하는 프라이빗 프로그램으로 일상의 스트레스를 해소하세요.`,
+    `${locationPrefix} 출장 스웨디시 힐링 마사지 제휴점 ${shop.name}. 향기로운 아로마와 부드러운 터치로 최고의 휴식을 경험하세요.`,
+    `${locationPrefix} 출장 아로마 오일 마사지 전문 ${shop.name}. 숙련된 관리사의 품격 있는 바디케어 서비스를 제공합니다.`,
+    `${locationPrefix} 출장 홈케어 맞춤 마사지 안내. ${shop.name}와 함께 편안한 공간에서 힐링 타임을 누려보세요.`,
+    `${locationPrefix} 출장 럭셔리 스파 마사지 제휴샵 ${shop.name}. 철저한 위생 관리와 고객 만족 중심의 맞춤형 케어.`,
+    `${locationPrefix} 출장 감성 테라피 마사지 전문 ${shop.name}. 몸과 마음의 피로를 편안하게 채워드립니다.`,
+    `${locationPrefix} 출장 정통 바디 마사지 안내. ${shop.name}에서 신속하고 안전한 방문 서비스를 받아보세요.`,
+    `${locationPrefix} 출장 1:1 커스텀 마사지 제휴처 ${shop.name}. 정직한 후불제 시스템으로 믿을 수 있는 웰니스 케어.`,
+    `${locationPrefix} 출장 안심 힐링 마사지 서비스 ${shop.name}. 지친 몸에 활력을 불어넣어 주는 프리미엄 솔루션.`,
+    `${locationPrefix} 출장 프리미엄 케어 마사지 전문 ${shop.name}. 뭉친 근육을 시원하게 풀어주는 커스텀 프로그램을 만나보세요.`,
+    `${locationPrefix} 출장 소프트 릴렉싱 마사지 가이드 ${shop.name}. 편안하고 안심할 수 있는 방문 바디케어 서비스.`,
+    `${locationPrefix} 출장 신속방문 스웨디시 마사지 제휴점 ${shop.name}. 전문 힐러들의 손길로 완벽한 피로 회복을 선사합니다.`,
+    `${locationPrefix} 출장 전문 웰니스 마사지 안내 ${shop.name}. 이동의 불편함 없이 내 공간에서 누리는 럭셔리 힐링.`,
+    `${locationPrefix} 출장 딥티슈 바디 마사지 전문 ${shop.name}. 부드러운 오일 케어로 심신의 안정을 찾아드립니다.`,
+    `${locationPrefix} 출장 커스텀 아로마 마사지 제휴샵 ${shop.name}. 투명하고 정직한 요금으로 품격 있는 케어를 제공합니다.`,
+    `${locationPrefix} 출장 VIP 힐링 마사지 ${shop.name}. 고객 맞춤형 힐링 프로그램으로 최상의 만족도를 드립니다.`,
+    `${locationPrefix} 출장 스페셜 맞춤 마사지 ${shop.name}. 최고급 퀄리티의 마사지로 일상의 품격을 높여보세요.`,
+    `${locationPrefix} 출장 안심 홈케어 마사지 제휴점 ${shop.name}. 지친 일상 끝에 찾아오는 완벽한 휴식의 시간.`,
+    `${locationPrefix} 출장 프리미엄 릴렉스 마사지 서비스 ${shop.name}. 철저한 검증을 거친 제휴점의 안전한 방문 케어.`,
+    `${locationPrefix} 출장 피로해소 전신 마사지 ${shop.name}. 세심하고 정성스러운 터치로 묵은 피로를 해소하세요.`,
+    `${locationPrefix} 출장 맞춤형 스웨디시 마사지 안내 ${shop.name}. 편안하고 아늑한 힐링 테라피를 지금 경험해 보세요.`,
+    `${locationPrefix} 출장 힐링 테라피 마사지 제휴처 ${shop.name}. 빠르고 친절한 매칭으로 만족도를 더했습니다.`,
+    `${locationPrefix} 출장 실속형 바디 마사지 솔루션 ${shop.name}. 체계적인 마사지 프로그램으로 활력을 되찾으세요.`,
+    `${locationPrefix} 출장 쾌적한 방문 마사지 ${shop.name}. 깊은 근육까지 시원하게 이완시켜 주는 프리미엄 케어.`,
+    `${locationPrefix} 출장 종합 웰니스 마사지 제휴샵 ${shop.name}. 정성과 실력을 갖춘 전문 관리사의 방문 서비스.`,
+    `${locationPrefix} 출장 최고급 감성 마사지 ${shop.name}. 몸과 마음의 균형을 되찾아주는 안심 웰니스 솔루션.`
+  ];
+
+  const pageTitle = titleVariants[variantIndex];
+  const pageDescription = descriptionVariants[variantIndex];
 
   return {
-    title: `${pageTitle} | 모먼트레스트`,
+    title: pageTitle,
     description: pageDescription,
+    keywords: [
+      `${locationPrefix} 출장 전문 마사지`,
+      `${locationPrefix} 출장 맞춤 마사지`,
+      `${locationPrefix} 출장 프라이빗 마사지`,
+      `${locationPrefix} 출장 힐링 마사지`,
+      `${locationPrefix} 출장 바디 마사지`,
+      "모먼트레스트"
+    ],
     openGraph: {
       title: pageTitle,
       description: pageDescription,
@@ -297,9 +379,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function ShopDetailPage({ params }: PageProps) {
+export default async function ShopDetailPage({ params, searchParams }: PageProps) {
   const resolvedParams = await params;
-  const { region, district, dong, shopName } = resolvedParams;
+  const resolvedSearchParams = await searchParams;
+
+  const { region, district, shopName } = resolvedParams;
+  const dong = resolvedSearchParams.dong;
   
   const decodedDistrict = decodeURIComponent(district);
   const decodedDong = dong ? decodeURIComponent(dong) : "";
@@ -321,7 +406,7 @@ export default async function ShopDetailPage({ params }: PageProps) {
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1 space-y-8">
         
-        {/* 샵 타이틀 카드 (지역명과 샵 이름 사이에 띄어쓰기 적용) */}
+        {/* 샵 타이틀 카드 */}
         <section className="bg-white border border-pink-200 rounded-3xl p-6 md:p-8 shadow-sm space-y-4">
           <div className="flex flex-col md:flex-row gap-6 items-center">
             <img 
@@ -334,10 +419,10 @@ export default async function ShopDetailPage({ params }: PageProps) {
                 {shop.badge}
               </span>
               <h1 className="text-2xl md:text-3xl font-black text-gray-900">
-                {locationPrefix} {shop.name}
+                {locationPrefix} 출장 전문 마사지 - {shop.name}
               </h1>
               <p className="text-xs text-gray-500 leading-relaxed">
-                {shop.desc}
+                {locationPrefix} 지역에서 만나보는 출장 맞춤 마사지 제휴 서비스입니다. {shop.desc}
               </p>
               <div className="pt-2 flex flex-wrap gap-2 justify-center md:justify-start">
                 {shop.features.map((feat, idx) => (
@@ -401,7 +486,7 @@ export default async function ShopDetailPage({ params }: PageProps) {
 
         {/* 이전으로 돌아가기 */}
         <div className="text-center pt-4 pb-12">
-          <Link href={`/${region}/${encodeURIComponent(district)}${dong ? `/${encodeURIComponent(dong)}` : ""}`} className="text-xs text-gray-500 hover:text-pink-600 font-semibold transition-colors">
+          <Link href={`/${region}/${encodeURIComponent(district)}${decodedDong ? `?dong=${encodeURIComponent(decodedDong)}` : ""}`} className="text-xs text-gray-500 hover:text-pink-600 font-semibold transition-colors">
             ← 이전 지역 목록으로 돌아가기
           </Link>
         </div>

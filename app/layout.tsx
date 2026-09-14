@@ -11,17 +11,20 @@ export const metadata: Metadata = {
   keywords: [
     "모먼트레스트",
     "힐링 테라피",
-    "프라이빗 샵",
+    "프라이빗 마사지",
     "아로마 테라피",
     "스웨디시",
-    "홈케어 서비스"
+    "감성 테라피",
+    "체형 관리",
+    "릴렉싱 스파",
+    "건전 마사지",
   ],
   alternates: {
     canonical: "https://momentrest.netlify.app",
   },
   openGraph: {
     title: "모먼트레스트 - 프리미엄 힐링 & 프라이빗 테라피",
-    description: "편안한 휴식과 힐링을 제공하는 모먼트레스트 공식 홈케어 플랫폼입니다.",
+    description: "편안한 휴식과 힐링을 제공하는 모먼트레스트 공식 테라피 플랫폼입니다.",
     url: "https://momentrest.netlify.app",
     siteName: "모먼트레스트",
     locale: "ko_KR",
@@ -35,9 +38,8 @@ export const metadata: Metadata = {
       },
     ],
   },
-  // 🌟 네이버 서치어드바이저 소유권 확인 메타 태그 (필요시 기존 코드 유지)
   other: {
-    "naver-site-verification": "54151eda21b1ba8f42df6306d48f226d92068077",
+    "naver-site-verification": "88fcbdafe3b38905f47676300442497e64c4663f",
   },
 };
 
@@ -48,9 +50,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <head>
-        <meta name="naver-site-verification" content="88fcbdafe3b38905f47676300442497e64c4663f" />
-      </head>
       <body className="bg-[#fff5f7] text-[#2f3542] antialiased selection:bg-pink-400 selection:text-white">
         {children}
       </body>
