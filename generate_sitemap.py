@@ -5,7 +5,7 @@ from urllib.parse import quote
 BASE_URL = "https://momentrest.netlify.app"
 TODAY = datetime.date.today().isoformat()
 
-# 동 페이지에 탑재된 5대 고정 샵 슬러그
+# 구/동 페이지 공통 5대 제휴 샵 슬러그
 SHOPS = [
     "golden-therapy",
     "miin-therapy",
@@ -15,15 +15,21 @@ SHOPS = [
 ]
 
 routes = []
+seen_urls = set()
 
 def add_url(path: str, changefreq: str = "daily", priority: str = "0.9"):
-    # 슬래시는 보존하면서 한글 및 특수문자 안전 인코딩
+    # 슬래시(/)를 보존하며 한글 및 특수문자 안전 인코딩
     encoded_path = quote(path, safe="/")
-    routes.append({
-        "loc": f"{BASE_URL}{encoded_path}",
-        "changefreq": changefreq,
-        "priority": priority
-    })
+    full_url = f"{BASE_URL}{encoded_path}"
+    
+    # 중복 URL 생성 방지
+    if full_url not in seen_urls:
+        seen_urls.add(full_url)
+        routes.append({
+            "loc": full_url,
+            "changefreq": changefreq,
+            "priority": priority
+        })
 
 # 1. 메인 및 광역 시/도 랜딩
 add_url("", changefreq="daily", priority="1.0")
@@ -35,16 +41,20 @@ add_url("/incheon", changefreq="daily", priority="0.95")
 for cat in ['services', 'prices', 'travel', 'places', 'reviews']:
     add_url(f"/{cat}", changefreq="weekly", priority="0.8")
 
-# 3. 서울특별시 (25개 구 허브)
+# 3. 서울특별시 (25개 구)
 seoul_gus = [
     "종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구",
     "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구",
     "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"
 ]
 for gu in seoul_gus:
+    # 구 메인 페이지
     add_url(f"/seoul/{gu}", changefreq="daily", priority="0.9")
+    # 구 단위 /SHOP/ 상세 페이지
+    for shop in SHOPS:
+        add_url(f"/seoul/{gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
 
-# 4. 경기도 7개 대도시 (시 단위 + 구 단위)
+# 4. 경기도 7대 대도시 (시 단위 + 띄어쓴 구 + 붙여쓴 구 + 각 단위별 /SHOP/)
 gyeonggi_sub_cities = {
     "수원시": ["장안구", "권선구", "팔달구", "영통구"],
     "성남시": ["수정구", "중원구", "분당구"],
@@ -55,11 +65,23 @@ gyeonggi_sub_cities = {
     "안산시": ["상록구", "단원구"],
 }
 for city, gus in gyeonggi_sub_cities.items():
+    # 1) 시 단독 (예: /gyeonggi/용인시)
     add_url(f"/gyeonggi/{city}", changefreq="daily", priority="0.9")
+    for shop in SHOPS:
+        add_url(f"/gyeonggi/{city}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+    
     for gu in gus:
+        # 2) 띄어쓰기 형태 (예: /gyeonggi/용인시 처인구)
         add_url(f"/gyeonggi/{city} {gu}", changefreq="daily", priority="0.85")
+        for shop in SHOPS:
+            add_url(f"/gyeonggi/{city} {gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+        
+        # 3) 붙여쓰기 형태 (예: /gyeonggi/용인시처인구)
+        add_url(f"/gyeonggi/{city}{gu}", changefreq="daily", priority="0.85")
+        for shop in SHOPS:
+            add_url(f"/gyeonggi/{city}{gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
 
-# 5. 경기도 일반 시·군 (24개 허브)
+# 5. 경기도 일반 시·군 (24개)
 gyeonggi_single_cities = [
     "의정부시", "광명시", "평택시", "동두천시", "과천시", "구리시", "남양주시",
     "오산시", "시흥시", "군포시", "의왕시", "하남시", "파주시", "이천시",
@@ -68,43 +90,34 @@ gyeonggi_single_cities = [
 ]
 for city in gyeonggi_single_cities:
     add_url(f"/gyeonggi/{city}", changefreq="daily", priority="0.9")
+    for shop in SHOPS:
+        add_url(f"/gyeonggi/{city}/SHOP/{shop}", changefreq="weekly", priority="0.8")
 
-# 6. 인천광역시 구·군 (11개 허브)
+# 6. 인천광역시 구·군 (11개)
 incheon_districts = [
     "부평구", "남동구", "연수구", "미추홀구", "계양구", "서해구", "검단구",
     "제물포구", "영종구", "강화군", "옹진군"
 ]
 for gu in incheon_districts:
     add_url(f"/incheon/{gu}", changefreq="daily", priority="0.9")
+    for shop in SHOPS:
+        add_url(f"/incheon/{gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
 
-# ⭐ 7. 수도권 전체 세부 행정동·읍·면 종합 데이터
+# 7. 수도권 전체 세부 행정동·읍·면 종합 데이터
 dongs_data = [
-    # ── 경기도 일반 시·군 ──
-    # 동두천시 (보산동 포함 전체)
+    # ── 경기도 일반 시·군 세부 동/면 ──
     ("gyeonggi", "동두천시", ["보산동", "생연동", "생연1동", "생연2동", "중앙동", "불현동", "송내동", "소요동", "상패동", "지행동", "광암동"]),
-    
-    # 안성시 (죽산면 포함 전체)
     ("gyeonggi", "안성시", ["죽산면", "공도읍", "일죽면", "삼죽면", "미양면", "대덕면", "양성면", "원곡면", "보개면", "금광면", "서운면", "고삼면", "안성동", "당왕동", "아양동", "옥산동"]),
-    
-    # 평택시
     ("gyeonggi", "평택시", ["비전동", "비전1동", "비전2동", "동삭동", "세교동", "용이동", "서정동", "이충동", "장당동", "고덕동", "고덕면", "안중읍", "포승읍", "청북읍", "팽성읍", "진위면"]),
-    
-    # 화성시
     ("gyeonggi", "화성시", ["동탄동", "반송동", "능동", "석우동", "청계동", "영천동", "오산동", "목동", "산척동", "송동", "장지동", "신동", "병점동", "진안동", "반월동", "기배동", "봉담읍", "향남읍", "남양읍", "우정읍"]),
-    
-    # 파주시 / 김포시 / 하남시
     ("gyeonggi", "파주시", ["야당동", "와동동", "목동동", "동패동", "문산읍", "조리읍", "금촌동", "교하동", "운정동", "탄현면", "광탄면"]),
     ("gyeonggi", "김포시", ["구래동", "마산동", "장기동", "운양동", "걸포동", "북변동", "사우동", "풍무동", "고촌읍", "통진읍", "양촌읍"]),
     ("gyeonggi", "하남시", ["미사동", "망월동", "선동", "풍산동", "신장동", "덕풍동", "감일동", "위례동", "초이동", "천현동"]),
-    
-    # 의정부시 / 남양주시 / 구리시 / 시흥시 / 광명시
     ("gyeonggi", "의정부시", ["의정부동", "호원동", "장암동", "신곡동", "송산동", "자금동", "가능동", "흥선동", "녹양동", "민락동", "고산동"]),
     ("gyeonggi", "남양주시", ["다산동", "별내동", "별내면", "와부읍", "진접읍", "화도읍", "진건읍", "오남읍", "퇴계원읍", "평내동", "호평동"]),
     ("gyeonggi", "구리시", ["갈매동", "인창동", "교문동", "수택동", "토평동", "사노동", "아천동"]),
     ("gyeonggi", "시흥시", ["배곧동", "정왕동", "은행동", "대야동", "신천동", "목감동", "은계동", "장현동", "능곡동", "월곶동"]),
     ("gyeonggi", "광명시", ["철산동", "하안동", "소하동", "일직동", "광명동", "학온동"]),
-    
-    # 군포시 / 오산시 / 이천시 / 양주시 / 포천시 / 여주시 / 과천시 / 의왕시 / 양평·가평·연천
     ("gyeonggi", "군포시", ["산본동", "당동", "당정동", "부곡동", "금정동", "군포동", "대야미동"]),
     ("gyeonggi", "오산시", ["원동", "궐동", "오산동", "세교동", "수청동", "금암동", "양산동", "부산동", "은계동"]),
     ("gyeonggi", "이천시", ["창전동", "중리동", "관고동", "안흥동", "증포동", "부발읍", "장호원읍", "신둔면"]),
@@ -117,7 +130,7 @@ dongs_data = [
     ("gyeonggi", "가평군", ["가평읍", "설악면", "청평면", "상면", "조종면", "북면"]),
     ("gyeonggi", "연천군", ["연천읍", "전곡읍", "군남면", "청산면", "백학면", "미산면"]),
 
-    # ── 경기도 7대 대도시 세부 일반구별 동 ──
+    # ── 경기도 7대 대도시 일반구별 동 ──
     ("gyeonggi", "수원시 영통구", ["영통동", "매탄동", "원천동", "이의동", "하동", "광교동", "망포동"]),
     ("gyeonggi", "수원시 팔달구", ["인계동", "우만동", "화서동", "지동", "매산동", "고등동", "행궁동"]),
     ("gyeonggi", "수원시 권선구", ["권선동", "곡반정동", "세류동", "호매실동", "금곡동", "구운동", "탑동", "오목천동"]),
@@ -139,7 +152,7 @@ dongs_data = [
     ("gyeonggi", "안산시 단원구", ["고잔동", "중앙동", "초지동", "원곡동", "선부동", "와동", "신길동", "대부동"]),
     ("gyeonggi", "안산시 상록구", ["본오동", "사동", "일동", "이동", "월피동", "성포동", "부곡동", "안산동"]),
 
-    # ── 인천광역시 ──
+    # ── 인천광역시 세부 동 ──
     ("incheon", "미추홀구", ["주안동", "주안1동", "주안2동", "주안3동", "주안4동", "주안5동", "주안6동", "주안7동", "주안8동", "도화동", "용현동", "숭의동", "학익동", "관교동", "문학동"]),
     ("incheon", "부평구", ["부평동", "부평1동", "부평2동", "부평3동", "부평4동", "부평5동", "부개동", "산곡동", "청천동", "갈산동", "삼산동", "십정동", "일신동"]),
     ("incheon", "남동구", ["구월동", "구월1동", "구월2동", "구월3동", "구월4동", "간석동", "만수동", "논현동", "서창동", "장수서창동", "남촌도림동"]),
@@ -152,7 +165,7 @@ dongs_data = [
     ("incheon", "강화군", ["강화읍", "선원면", "불은면", "길상면", "화도면", "양도면", "내가면"]),
     ("incheon", "옹진군", ["백령면", "연평면", "대청면", "영흥면", "자월면", "덕적면", "북도면"]),
 
-    # ── 서울특별시 ──
+    # ── 서울특별시 세부 동 ──
     ("seoul", "강남구", ["역삼동", "논현동", "신사동", "압구정동", "청담동", "삼성동", "대치동", "개포동", "도곡동", "일원동", "수서동", "세곡동", "자곡동", "율현동"]),
     ("seoul", "서초구", ["서초동", "잠원동", "반포동", "방배동", "양재동", "우면동", "내곡동", "염곡동", "신원동"]),
     ("seoul", "송파구", ["잠실동", "신천동", "풍납동", "송파동", "석촌동", "삼전동", "가락동", "문정동", "장지동", "방이동", "오금동", "거여동", "마천동"]),
@@ -180,17 +193,17 @@ dongs_data = [
     ("seoul", "중구", ["명동", "을지로동", "회현동", "소공동", "장충동", "광희동", "다산동", "약수동", "청구동", "신당동", "동화동", "황학동", "중림동"])
 ]
 
-# 8. 동 페이지 및 하위 5대 샵 상세 페이지 루프 생성
+# 8. 동 단위 페이지 및 동 하위 /SHOP/ 상세 페이지 생성
 for region, district, dong_list in dongs_data:
     for dong in dong_list:
-        # 1) 동 페이지: /{region}/{district}/{dong}
+        # 1) 동 단위 메인: /{region}/{district}/{dong}
         add_url(f"/{region}/{district}/{dong}", changefreq="daily", priority="0.85")
         
-        # 2) 동 하위 5개 샵 상세: /{region}/{district}/{dong}/SHOP/{shopName}
+        # 2) 동 단위 하위 샵 5개: /{region}/{district}/{dong}/SHOP/{shopName}
         for shop in SHOPS:
             add_url(f"/{region}/{district}/{dong}/SHOP/{shop}", changefreq="weekly", priority="0.8")
 
-# 9. sitemap.xml 파일 저장
+# 9. XML 파일 저장
 def build_sitemap():
     output_dir = "public" if os.path.exists("public") else "."
     output_path = os.path.join(output_dir, "sitemap.xml")
@@ -209,7 +222,7 @@ def build_sitemap():
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(xml))
 
-    print(f"✅ 수도권 전체 동+샵 포함 sitemap.xml 생성 완료: 총 {len(routes)}개의 URL 등록됨")
+    print(f"✅ sitemap.xml 생성 완료: 총 {len(routes)}개의 고유 URL이 등록되었습니다.")
 
 if __name__ == "__main__":
     build_sitemap()
