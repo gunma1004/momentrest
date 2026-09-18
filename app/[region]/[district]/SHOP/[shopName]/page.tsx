@@ -291,57 +291,58 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   const variantIndex = charSum % 30;
 
   const titleVariants = [
-   
-    `${locationPrefix} 출장 프리미엄 케어 마사지 · ${shop.name}`,
-    `${locationPrefix} 출장 소프트 릴렉싱 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 신속방문 스웨디시 마사지 | ${shop.name}`,
-    `${locationPrefix} 출장 전문 웰니스 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 딥티슈 바디 마사지 · ${shop.name}`,
-    `${locationPrefix} 출장 커스텀 아로마 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 VIP 힐링 마사지 | ${shop.name}`,
-    `${locationPrefix} 출장 스페셜 맞춤 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 안심 홈케어 마사지 · ${shop.name}`,
-    `${locationPrefix} 출장 프리미엄 릴렉스 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 피로해소 전신 마사지 | ${shop.name}`,
-    `${locationPrefix} 출장 맞춤형 스웨디시 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 힐링 테라피 마사지 · ${shop.name}`,
-    `${locationPrefix} 출장 실속형 바디 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 쾌적한 방문 마사지 | ${shop.name}`,
-    `${locationPrefix} 출장 종합 웰니스 마사지 - ${shop.name}`,
-    `${locationPrefix} 출장 최고급 감성 마사지 · ${shop.name}`
+    // 1. 프리미엄 & 웰니스 테마 (출장 ... 마사지 분리)
+    `${locationPrefix} 출장 프리미엄 홈케어 힐링 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 전문 맞춤형 바디 릴렉싱 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 프라이빗 에스테틱 전신 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 VIP 웰니스 케어 힐링 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 딥티슈 밸런스 케어 전문 마사지 | ${shop.name}`,
+
+    // 2. 아로마 & 감성 & 스웨디시 테마 (출장 ... 마사지 분리)
+    `${locationPrefix} 출장 감성 스웨디시 림프 케어 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 천연 아로마 오일 힐링 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 림프 순환 집중 소프트 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 1:1 커스텀 아늑한 바디 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 프리미엄 오일 릴렉스 전신 마사지 · ${shop.name}`,
+
+    // 3. 신속 방문 & 홈타이 테마 (출장 ... 마사지 분리)
+    `${locationPrefix} 출장 신속 방문 프리미엄 홈케어 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 편안한 내 공간 맞춤 힐링 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 빠른 예약 안심 방문 케어 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 수도권 전지역 신속 릴렉싱 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 일상 속 프라이빗 방문 힐링 마사지 - ${shop.name}`,
+
+    // 4. 피로 회복 & 스트레스 해소 테마 (출장 ... 마사지 분리)
+    `${locationPrefix} 출장 피로 해소 전신 활력 충전 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 뭉친 근육 집중 케어 릴리프 마사지 | ${shop.name}`,
+    `${locationPrefix} 출장 숙련된 전문 힐러의 정통 바디 마사지 - ${shop.name}`,
+    `${locationPrefix} 출장 도심 속 쾌적한 웰니스 힐링 마사지 · ${shop.name}`,
+    `${locationPrefix} 출장 정직한 후불제 실속형 바디 마사지 | ${shop.name}`
   ];
 
   const descriptionVariants = [
-    `${locationPrefix} 출장 전문 힐링 마사지 제휴처 ${shop.name}. 선입금 없는 100% 후불제 안전 시스템으로 편안한 휴식을 선사합니다.`,
-    `${locationPrefix} 출장 방문 릴렉스 마사지 서비스 안내. ${shop.name}에서 검증된 전문 관리사와 함께 지친 피로를 날려보세요.`,
-    `${locationPrefix} 출장 프라이빗 맞춤 마사지 솔루션. ${shop.name}의 품격 있는 1:1 커스텀 코스를 지금 바로 만나보세요.`,
-    `${locationPrefix} 출장 웰니스 바디 마사지 전문점 ${shop.name}. 신속한 방문과 정직한 정찰제로 안심하고 이용하실 수 있습니다.`,
-    `${locationPrefix} 출장 케어 전신 마사지 안내. ${shop.name}에서 제공하는 프라이빗 프로그램으로 일상의 스트레스를 해소하세요.`,
-    `${locationPrefix} 출장 스웨디시 힐링 마사지 제휴점 ${shop.name}. 향기로운 아로마와 부드러운 터치로 최고의 휴식을 경험하세요.`,
-    `${locationPrefix} 출장 아로마 오일 마사지 전문 ${shop.name}. 숙련된 관리사의 품격 있는 바디케어 서비스를 제공합니다.`,
-    `${locationPrefix} 출장 홈케어 맞춤 마사지 안내. ${shop.name}와 함께 편안한 공간에서 힐링 타임을 누려보세요.`,
-    `${locationPrefix} 출장 럭셔리 스파 마사지 제휴샵 ${shop.name}. 철저한 위생 관리와 고객 만족 중심의 맞춤형 케어.`,
-    `${locationPrefix} 출장 감성 테라피 마사지 전문 ${shop.name}. 몸과 마음의 피로를 편안하게 채워드립니다.`,
-    `${locationPrefix} 출장 정통 바디 마사지 안내. ${shop.name}에서 신속하고 안전한 방문 서비스를 받아보세요.`,
-    `${locationPrefix} 출장 1:1 커스텀 마사지 제휴처 ${shop.name}. 정직한 후불제 시스템으로 믿을 수 있는 웰니스 케어.`,
-    `${locationPrefix} 출장 안심 힐링 마사지 서비스 ${shop.name}. 지친 몸에 활력을 불어넣어 주는 프리미엄 솔루션.`,
-    `${locationPrefix} 출장 프리미엄 케어 마사지 전문 ${shop.name}. 뭉친 근육을 시원하게 풀어주는 커스텀 프로그램을 만나보세요.`,
-    `${locationPrefix} 출장 소프트 릴렉싱 마사지 가이드 ${shop.name}. 편안하고 안심할 수 있는 방문 바디케어 서비스.`,
-    `${locationPrefix} 출장 신속방문 스웨디시 마사지 제휴점 ${shop.name}. 전문 힐러들의 손길로 완벽한 피로 회복을 선사합니다.`,
-    `${locationPrefix} 출장 전문 웰니스 마사지 안내 ${shop.name}. 이동의 불편함 없이 내 공간에서 누리는 럭셔리 힐링.`,
-    `${locationPrefix} 출장 딥티슈 바디 마사지 전문 ${shop.name}. 부드러운 오일 케어로 심신의 안정을 찾아드립니다.`,
-    `${locationPrefix} 출장 커스텀 아로마 마사지 제휴샵 ${shop.name}. 투명하고 정직한 요금으로 품격 있는 케어를 제공합니다.`,
-    `${locationPrefix} 출장 VIP 힐링 마사지 ${shop.name}. 고객 맞춤형 힐링 프로그램으로 최상의 만족도를 드립니다.`,
-    `${locationPrefix} 출장 스페셜 맞춤 마사지 ${shop.name}. 최고급 퀄리티의 마사지로 일상의 품격을 높여보세요.`,
-    `${locationPrefix} 출장 안심 홈케어 마사지 제휴점 ${shop.name}. 지친 일상 끝에 찾아오는 완벽한 휴식의 시간.`,
-    `${locationPrefix} 출장 프리미엄 릴렉스 마사지 서비스 ${shop.name}. 철저한 검증을 거친 제휴점의 안전한 방문 케어.`,
-    `${locationPrefix} 출장 피로해소 전신 마사지 ${shop.name}. 세심하고 정성스러운 터치로 묵은 피로를 해소하세요.`,
-    `${locationPrefix} 출장 맞춤형 스웨디시 마사지 안내 ${shop.name}. 편안하고 아늑한 힐링 테라피를 지금 경험해 보세요.`,
-    `${locationPrefix} 출장 힐링 테라피 마사지 제휴처 ${shop.name}. 빠르고 친절한 매칭으로 만족도를 더했습니다.`,
-    `${locationPrefix} 출장 실속형 바디 마사지 솔루션 ${shop.name}. 체계적인 마사지 프로그램으로 활력을 되찾으세요.`,
-    `${locationPrefix} 출장 쾌적한 방문 마사지 ${shop.name}. 깊은 근육까지 시원하게 이완시켜 주는 프리미엄 케어.`,
-    `${locationPrefix} 출장 종합 웰니스 마사지 제휴샵 ${shop.name}. 정성과 실력을 갖춘 전문 관리사의 방문 서비스.`,
-    `${locationPrefix} 출장 최고급 감성 마사지 ${shop.name}. 몸과 마음의 균형을 되찾아주는 안심 웰니스 솔루션.`
+    // 신뢰 / 후불제 시스템 강조형
+    `${locationPrefix} 출장 전문 힐러가 선사하는 고품격 바디 마사지 제휴처 ${shop.name}. 선입금 없는 100% 후불제로 안전하고 편안한 휴식을 약속합니다.`,
+    `${locationPrefix} 출장 방문 케어로 만나는 검증된 전신 마사지 프로그램. ${shop.name}에서 투명한 정찰제와 1:1 맞춤형 힐링을 경험해 보세요.`,
+    `${locationPrefix} 출장 홈케어 시스템으로 이동의 번거로움 없이 즐기는 프라이빗 마사지 안내. ${shop.name}의 품격 있는 관리로 하루의 피로를 비워보세요.`,
+    `${locationPrefix} 출장 서비스의 편리함과 철저한 위생을 갖춘 안심 힐링 마사지. ${shop.name}에서 고객 만족 중심의 맞춤형 케어를 제공합니다.`,
+
+    // 코스 및 테라피 전문성 강조형
+    `${locationPrefix} 출장 테라피로 즐기는 감성 스웨디시 & 림프 순환 마사지 전문점 ${shop.name}. 향기로운 천연 아로마 오일로 깊은 이완을 선물합니다.`,
+    `${locationPrefix} 출장 맞춤 코스로 지친 몸에 활력을 더하는 딥티슈 밸런스 마사지. ${shop.name}의 숙련된 전문가 손길로 뭉친 근육을 부드럽게 이완해 드립니다.`,
+    `${locationPrefix} 출장 케어로 언제 어디서나 편안하게 누리는 1:1 커스텀 마사지. ${shop.name}에서 정교한 터치로 완성되는 바디 테라피를 만나보세요.`,
+    `${locationPrefix} 출장 웰니스 프로그램으로 일상의 스트레스를 날려주는 전신 힐링 마사지. ${shop.name}의 프리미엄 에센셜 오일 케어로 컨디션을 리셋하세요.`,
+
+    // 공간 편의성 & 신속 매칭 강조형
+    `${locationPrefix} 출장 방문 방식으로 원하는 시간에 내 집에서 누리는 아늑한 마사지. ${shop.name}의 신속한 지역 매칭으로 지체 없이 힐링을 시작하세요.`,
+    `${locationPrefix} 출장 예약 시 빠르게 방문하여 쾌적한 휴식을 제공하는 프리미엄 홈케어 마사지. ${shop.name}와 함께 편안한 공간에서 활력을 되찾아보세요.`,
+    `${locationPrefix} 출장 힐링 솔루션으로 자택이나 호텔 어디서든 간편하게 이용하는 바디 마사지. ${shop.name}가 약속하는 수준 높은 힐러의 서비스를 확인해 보세요.`,
+    `${locationPrefix} 출장 서비스로 대기 시간 없이 바로 즐기는 맞춤형 전신 릴렉스 마사지. ${shop.name}에서 특별하고 프라이빗한 쉼표를 완성해 드립니다.`,
+
+    // 힐링 & 감성 카피형
+    `${locationPrefix} 출장 웰니스의 새로운 기준, 오직 나만을 위해 준비된 감성 케어 마사지. ${shop.name}에서 최고의 힐링 프로그램으로 하루를 마무리하세요.`,
+    `${locationPrefix} 출장 테라피 안내. 묵은 피로와 긴장을 부드럽게 풀어주는 안심 힐링 마사지 제휴샵 ${shop.name}에서 만족도 높은 서비스를 경험해 보세요.`,
+    `${locationPrefix} 출장 방문으로 몸과 마음의 조화로운 균형을 되찾아주는 전신 밸런스 마사지. ${shop.name}의 정성 어린 케어로 활력을 채워보시기 바랍니다.`
   ];
 
   const pageTitle = titleVariants[variantIndex];
