@@ -31,30 +31,28 @@ def add_url(path: str, changefreq: str = "daily", priority: str = "0.9"):
             "priority": priority
         })
 
-# 1. 메인 및 광역 시/도 랜딩
+# 1. 메인 및 마사지 광역 시/도 랜딩
 add_url("", changefreq="daily", priority="1.0")
-add_url("/seoul", changefreq="daily", priority="0.95")
-add_url("/gyeonggi", changefreq="daily", priority="0.95")
-add_url("/incheon", changefreq="daily", priority="0.95")
+add_url("/massage/seoul", changefreq="daily", priority="0.95")
+add_url("/massage/gyeonggi", changefreq="daily", priority="0.95")
+add_url("/massage/incheon", changefreq="daily", priority="0.95")
 
 # 2. 카테고리 메인
 for cat in ['services', 'prices', 'travel', 'places', 'reviews']:
     add_url(f"/{cat}", changefreq="weekly", priority="0.8")
 
-# 3. 서울특별시 (25개 구)
+# 3. 서울특별시 (25개 구) -> /massage/seoul/{gu}
 seoul_gus = [
     "종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구",
     "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구",
     "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"
 ]
 for gu in seoul_gus:
-    # 구 메인 페이지
-    add_url(f"/seoul/{gu}", changefreq="daily", priority="0.9")
-    # 구 단위 /SHOP/ 상세 페이지
+    add_url(f"/massage/seoul/{gu}", changefreq="daily", priority="0.9")
     for shop in SHOPS:
-        add_url(f"/seoul/{gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+        add_url(f"/massage/seoul/{gu}/shop/{shop}", changefreq="weekly", priority="0.8")
 
-# 4. 경기도 7대 대도시 (시 단위 + 띄어쓴 구 + 붙여쓴 구 + 각 단위별 /SHOP/)
+# 4. 경기도 7대 대도시 -> /massage/gyeonggi/...
 gyeonggi_sub_cities = {
     "수원시": ["장안구", "권선구", "팔달구", "영통구"],
     "성남시": ["수정구", "중원구", "분당구"],
@@ -65,21 +63,20 @@ gyeonggi_sub_cities = {
     "안산시": ["상록구", "단원구"],
 }
 for city, gus in gyeonggi_sub_cities.items():
-    # 1) 시 단독 (예: /gyeonggi/용인시)
-    add_url(f"/gyeonggi/{city}", changefreq="daily", priority="0.9")
+    add_url(f"/massage/gyeonggi/{city}", changefreq="daily", priority="0.9")
     for shop in SHOPS:
-        add_url(f"/gyeonggi/{city}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+        add_url(f"/massage/gyeonggi/{city}/shop/{shop}", changefreq="weekly", priority="0.8")
     
     for gu in gus:
-        # 2) 띄어쓰기 형태 (예: /gyeonggi/용인시 처인구)
-        add_url(f"/gyeonggi/{city} {gu}", changefreq="daily", priority="0.85")
+        # 띄어쓰기 형태
+        add_url(f"/massage/gyeonggi/{city} {gu}", changefreq="daily", priority="0.85")
         for shop in SHOPS:
-            add_url(f"/gyeonggi/{city} {gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+            add_url(f"/massage/gyeonggi/{city} {gu}/shop/{shop}", changefreq="weekly", priority="0.8")
         
-        # 3) 붙여쓰기 형태 (예: /gyeonggi/용인시처인구)
-        add_url(f"/gyeonggi/{city}{gu}", changefreq="daily", priority="0.85")
+        # 붙여쓰기 형태
+        add_url(f"/massage/gyeonggi/{city}{gu}", changefreq="daily", priority="0.85")
         for shop in SHOPS:
-            add_url(f"/gyeonggi/{city}{gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+            add_url(f"/massage/gyeonggi/{city}{gu}/shop/{shop}", changefreq="weekly", priority="0.8")
 
 # 5. 경기도 일반 시·군 (24개)
 gyeonggi_single_cities = [
@@ -89,9 +86,9 @@ gyeonggi_single_cities = [
     "연천군", "가평군", "양평군"
 ]
 for city in gyeonggi_single_cities:
-    add_url(f"/gyeonggi/{city}", changefreq="daily", priority="0.9")
+    add_url(f"/massage/gyeonggi/{city}", changefreq="daily", priority="0.9")
     for shop in SHOPS:
-        add_url(f"/gyeonggi/{city}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+        add_url(f"/massage/gyeonggi/{city}/shop/{shop}", changefreq="weekly", priority="0.8")
 
 # 6. 인천광역시 구·군 (11개)
 incheon_districts = [
@@ -99,9 +96,9 @@ incheon_districts = [
     "제물포구", "영종구", "강화군", "옹진군"
 ]
 for gu in incheon_districts:
-    add_url(f"/incheon/{gu}", changefreq="daily", priority="0.9")
+    add_url(f"/massage/incheon/{gu}", changefreq="daily", priority="0.9")
     for shop in SHOPS:
-        add_url(f"/incheon/{gu}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+        add_url(f"/massage/incheon/{gu}/shop/{shop}", changefreq="weekly", priority="0.8")
 
 # 7. 수도권 전체 세부 행정동·읍·면 종합 데이터
 dongs_data = [
@@ -193,15 +190,12 @@ dongs_data = [
     ("seoul", "중구", ["명동", "을지로동", "회현동", "소공동", "장충동", "광희동", "다산동", "약수동", "청구동", "신당동", "동화동", "황학동", "중림동"])
 ]
 
-# 8. 동 단위 페이지 및 동 하위 /SHOP/ 상세 페이지 생성
+# 8. 동 단위 페이지 및 동 하위 샵 상세 페이지 생성 -> /massage/{region}/{district}/{dong}/shop/{shopName}
 for region, district, dong_list in dongs_data:
     for dong in dong_list:
-        # 1) 동 단위 메인: /{region}/{district}/{dong}
-        add_url(f"/{region}/{district}/{dong}", changefreq="daily", priority="0.85")
-        
-        # 2) 동 단위 하위 샵 5개: /{region}/{district}/{dong}/SHOP/{shopName}
+        add_url(f"/massage/{region}/{district}/{dong}", changefreq="daily", priority="0.85")
         for shop in SHOPS:
-            add_url(f"/{region}/{district}/{dong}/SHOP/{shop}", changefreq="weekly", priority="0.8")
+            add_url(f"/massage/{region}/{district}/{dong}/shop/{shop}", changefreq="weekly", priority="0.8")
 
 # 9. XML 파일 저장
 def build_sitemap():
