@@ -9,7 +9,7 @@ const categories = [
   { name: "이용 후기", href: "/reviews" },
 ];
 
-// 2. 추천 제휴 샵 5개
+// 2. 추천 제휴 샵 5개 (마사지 폴더 구조 반영)
 const localShops = [
   { id: 1, slug: "golden-therapy", region: "seoul", district: "강남구", name: "✨ 한국골든테라피", desc: "VIP 골든 릴렉싱 & 딥티슈 피로회복! 1:1 맞춤 테라피", phone: "0507-1280-3361", price: "80,000원부터~", image: "/shop1.jpg" },
   { id: 2, slug: "miin-therapy", region: "seoul", district: "강남구", name: "🌸 한국미인테라피", desc: "최고급 천연 오일 감성 스웨디시 & 아로마 전신 림프 순환", phone: "0507-1280-3303", price: "70,000원부터~", image: "/shop2.jpg" },
@@ -18,7 +18,7 @@ const localShops = [
   { id: 5, slug: "night-therapy", region: "seoul", district: "강남구", name: "🌙 오늘밤테라피", desc: "편안한 휴식과 안심 힐링! 수도권 전지역 신속한 방문", phone: "0507-1280-3223", price: "60,000원부터~", image: "/shop5.jpg" }
 ];
 
-// 3. ⭐ 서울특별시 (25개 구 + 주요 세부 동 100% 매핑)
+// 3. 서울특별시
 const seoulData = [
   { district: "강남구", dongs: ["역삼동", "논현동", "신사동", "압구정동", "청담동", "삼성동", "대치동", "개포동", "도곡동", "일원동", "수서동", "세곡동"] },
   { district: "서초구", dongs: ["서초동", "잠원동", "반포동", "방배동", "양재동", "내곡동"] },
@@ -47,7 +47,7 @@ const seoulData = [
   { district: "중구", dongs: ["명동", "을지로동", "회현동", "신당동", "다산동", "약수동", "황학동"] }
 ];
 
-// 4. ⭐ 경기도 7대 대도시 (일반구 + 세부 동 매핑)
+// 4. 경기도 7대 대도시
 const gyeonggiBigCities = [
   {
     city: "수원시",
@@ -106,7 +106,7 @@ const gyeonggiBigCities = [
   },
 ];
 
-// 5. ⭐ 경기도 일반 24개 시·군 (세부 동/읍/면 매핑 - 보산동, 죽산면 포함)
+// 5. 경기도 일반 24개 시·군
 const gyeonggiSingles = [
   { district: "동두천시", dongs: ["보산동", "생연동", "중앙동", "불현동", "송내동", "소요동", "지행동"] },
   { district: "안성시", dongs: ["죽산면", "공도읍", "일죽면", "삼죽면", "대덕면", "원곡면", "안성동"] },
@@ -134,7 +134,7 @@ const gyeonggiSingles = [
   { district: "연천군", dongs: ["연천읍", "전곡읍", "군남면", "청산면"] },
 ];
 
-// 6. ⭐ 인천광역시 (11개 구·군 + 세부 동 매핑 - 주안6동 포함)
+// 6. 인천광역시
 const incheonData = [
   { district: "미추홀구", dongs: ["주안동", "주안1동", "주안6동", "도화동", "용현동", "숭의동", "학익동", "관교동"] },
   { district: "부평구", dongs: ["부평동", "부평1동", "부평5동", "산곡동", "청천동", "갈산동", "삼산동", "부개동"] },
@@ -188,13 +188,13 @@ export default function HomePage() {
               서울, 경기, 인천 전지역 시·구·동 세부 네트워크를 통해 신속하고 편안한 방문 홈케어 테라피를 안내합니다.
             </p>
             <div className="flex gap-2 mt-4 justify-center sm:justify-start">
-              <Link href="/seoul" className="bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+              <Link href="/massage/seoul" className="bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
                 서울특별시
               </Link>
-              <Link href="/gyeonggi" className="bg-white hover:bg-pink-50 text-pink-600 border border-pink-300 text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition">
+              <Link href="/massage/gyeonggi" className="bg-white hover:bg-pink-50 text-pink-600 border border-pink-300 text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition">
                 경기도
               </Link>
-              <Link href="/incheon" className="bg-white hover:bg-pink-50 text-pink-600 border border-pink-300 text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition">
+              <Link href="/massage/incheon" className="bg-white hover:bg-pink-50 text-pink-600 border border-pink-300 text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition">
                 인천광역시
               </Link>
             </div>
@@ -218,7 +218,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 추천 제휴업체 5곳 */}
+        {/* 추천 제휴업체 5곳 (마사지 폴더 링크 반영) */}
         <section className="space-y-6">
           <div className="text-center">
             <p className="text-xs text-pink-600 font-bold tracking-widest uppercase">RECOMMENDED PARTNERS</p>
@@ -234,7 +234,7 @@ export default function HomePage() {
                 className="bg-white border border-pink-200 hover:border-pink-400 rounded-2xl p-4 flex gap-4 items-center shadow-md transition-all group relative"
               >
                 <Link
-                  href={`/${lShop.region}/${encodeURIComponent(lShop.district)}/SHOP/${lShop.slug}`}
+                  href={`/massage/${lShop.region}/${encodeURIComponent(lShop.district)}/역삼동/shop/${lShop.slug}`}
                   className="absolute inset-0 z-10"
                   aria-label={`${lShop.name} 상세페이지 보기`}
                 />
@@ -267,7 +267,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ⭐⭐⭐ 7. 수도권 시·구·동 전체 내부 링크 허브 (SEO 크롤링 완벽 수집용) ⭐⭐⭐ */}
+        {/* 수도권 시·구·동 전체 내부 링크 허브 (/massage 경로 적용) */}
         <section className="bg-white p-6 md:p-8 rounded-3xl border border-pink-200 shadow-sm space-y-10">
           <div className="text-center sm:text-left">
             <p className="text-xs text-pink-600 font-bold tracking-widest uppercase">ALL REGIONAL NETWORKS</p>
@@ -275,11 +275,11 @@ export default function HomePage() {
             <p className="text-xs text-gray-500 mt-1">원하시는 시/구 및 세부 행정동을 선택하시면 즉시 이동합니다.</p>
           </div>
 
-          {/* 1) 서울특별시 (25개 구 + 하위 동) */}
+          {/* 1) 서울특별시 */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-pink-500"></span>
-              <Link href="/seoul" className="text-base font-black text-gray-900 hover:text-pink-600 transition">
+              <Link href="/massage/seoul" className="text-base font-black text-gray-900 hover:text-pink-600 transition">
                 서울특별시 (25개 구 전체 및 행정동) &rarr;
               </Link>
             </div>
@@ -288,7 +288,7 @@ export default function HomePage() {
                 <div key={item.district} className="bg-[#fff9fa] p-3 rounded-2xl border border-pink-100">
                   <div className="mb-2">
                     <Link
-                      href={`/seoul/${encodeURIComponent(item.district)}`}
+                      href={`/massage/seoul/${encodeURIComponent(item.district)}`}
                       className="text-xs font-black text-pink-700 hover:underline"
                     >
                       {item.district} 전체 &rarr;
@@ -298,7 +298,7 @@ export default function HomePage() {
                     {item.dongs.map((dong) => (
                       <Link
                         key={dong}
-                        href={`/seoul/${encodeURIComponent(item.district)}/${encodeURIComponent(dong)}`}
+                        href={`/massage/seoul/${encodeURIComponent(item.district)}/${encodeURIComponent(dong)}`}
                         className="text-[11px] bg-white border border-pink-200 text-gray-600 hover:border-pink-400 hover:text-pink-600 px-2 py-0.5 rounded transition"
                       >
                         {dong}
@@ -312,11 +312,11 @@ export default function HomePage() {
 
           <hr className="border-pink-100" />
 
-          {/* 2) 경기도 (7개 대도시 일반구 + 하위 동) */}
+          {/* 2) 경기도 주요 7개 시 */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-pink-500"></span>
-              <Link href="/gyeonggi" className="text-base font-black text-gray-900 hover:text-pink-600 transition">
+              <Link href="/massage/gyeonggi" className="text-base font-black text-gray-900 hover:text-pink-600 transition">
                 경기도 주요 7개 시 (구 및 세부 행정동) &rarr;
               </Link>
             </div>
@@ -324,7 +324,7 @@ export default function HomePage() {
               {gyeonggiBigCities.map((big) => (
                 <div key={big.city} className="bg-[#fff9fa] p-3.5 rounded-2xl border border-pink-100 space-y-2">
                   <div className="flex items-center justify-between">
-                    <Link href={`/gyeonggi/${encodeURIComponent(big.city)}`} className="text-xs font-black text-pink-700 hover:underline">
+                    <Link href={`/massage/gyeonggi/${encodeURIComponent(big.city)}`} className="text-xs font-black text-pink-700 hover:underline">
                       {big.city} 전체 바로가기 &rarr;
                     </Link>
                   </div>
@@ -333,7 +333,7 @@ export default function HomePage() {
                       <div key={sg.gu} className="bg-white p-2.5 rounded-xl border border-pink-100">
                         <div className="mb-1.5">
                           <Link
-                            href={`/gyeonggi/${encodeURIComponent(`${big.city}${sg.gu}`)}`}
+                            href={`/massage/gyeonggi/${encodeURIComponent(`${big.city}${sg.gu}`)}`}
                             className="text-[11px] font-bold text-gray-800 hover:text-pink-600"
                           >
                             {sg.gu} &rarr;
@@ -343,7 +343,7 @@ export default function HomePage() {
                           {sg.dongs.map((d) => (
                             <Link
                               key={d}
-                              href={`/gyeonggi/${encodeURIComponent(`${big.city}${sg.gu}`)}/${encodeURIComponent(d)}`}
+                              href={`/massage/gyeonggi/${encodeURIComponent(`${big.city}${sg.gu}`)}/${encodeURIComponent(d)}`}
                               className="text-[10px] bg-pink-50/50 border border-pink-100 text-gray-600 hover:border-pink-400 hover:text-pink-600 px-1.5 py-0.5 rounded transition"
                             >
                               {d}
@@ -360,7 +360,7 @@ export default function HomePage() {
 
           <hr className="border-pink-100" />
 
-          {/* 3) 경기도 일반 24개 시·군 (보산동, 죽산면 등 하위 동/읍/면 완벽 연결) */}
+          {/* 3) 경기도 일반 시·군 */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-pink-500"></span>
@@ -371,7 +371,7 @@ export default function HomePage() {
                 <div key={item.district} className="bg-[#fff9fa] p-3 rounded-2xl border border-pink-100">
                   <div className="mb-2">
                     <Link
-                      href={`/gyeonggi/${encodeURIComponent(item.district)}`}
+                      href={`/massage/gyeonggi/${encodeURIComponent(item.district)}`}
                       className="text-xs font-black text-pink-700 hover:underline"
                     >
                       {item.district} 전체 &rarr;
@@ -381,7 +381,7 @@ export default function HomePage() {
                     {item.dongs.map((dong) => (
                       <Link
                         key={dong}
-                        href={`/gyeonggi/${encodeURIComponent(item.district)}/${encodeURIComponent(dong)}`}
+                        href={`/massage/gyeonggi/${encodeURIComponent(item.district)}/${encodeURIComponent(dong)}`}
                         className="text-[11px] bg-white border border-pink-200 text-gray-600 hover:border-pink-400 hover:text-pink-600 px-2 py-0.5 rounded transition"
                       >
                         {dong}
@@ -395,11 +395,11 @@ export default function HomePage() {
 
           <hr className="border-pink-100" />
 
-          {/* 4) 인천광역시 (11개 구·군 + 주안6동 등 하위 동 완벽 연결) */}
+          {/* 4) 인천광역시 */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-pink-500"></span>
-              <Link href="/incheon" className="text-base font-black text-gray-900 hover:text-pink-600 transition">
+              <Link href="/massage/incheon" className="text-base font-black text-gray-900 hover:text-pink-600 transition">
                 인천광역시 (11개 구·군 및 행정동) &rarr;
               </Link>
             </div>
@@ -408,7 +408,7 @@ export default function HomePage() {
                 <div key={item.district} className="bg-[#fff9fa] p-3 rounded-2xl border border-pink-100">
                   <div className="mb-2">
                     <Link
-                      href={`/incheon/${encodeURIComponent(item.district)}`}
+                      href={`/massage/incheon/${encodeURIComponent(item.district)}`}
                       className="text-xs font-black text-pink-700 hover:underline"
                     >
                       {item.district} 전체 &rarr;
@@ -418,7 +418,7 @@ export default function HomePage() {
                     {item.dongs.map((dong) => (
                       <Link
                         key={dong}
-                        href={`/incheon/${encodeURIComponent(item.district)}/${encodeURIComponent(dong)}`}
+                        href={`/massage/incheon/${encodeURIComponent(item.district)}/${encodeURIComponent(dong)}`}
                         className="text-[11px] bg-white border border-pink-200 text-gray-600 hover:border-pink-400 hover:text-pink-600 px-2 py-0.5 rounded transition"
                       >
                         {dong}
