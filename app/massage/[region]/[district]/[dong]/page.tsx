@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ClientTextMixerInline } from "../../page"; // 경로에 맞게 수정 가능
 
 interface PageProps {
   params: Promise<{
@@ -27,16 +26,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const charSum = (locationPrefix + "momentrest_dong_clean_100").split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const variantIndex = charSum % 50;
 
-    // 타이틀: '출장'과 '마사지'가 절대 붙어있지 않고 분산된 50가지 조합
     const titleVariants = [
-      `${locationPrefix} 지역 맞춤형 출장 서비스 타이 마사지 안내 `,
-      `${locationPrefix} 전문 출장 방문 가능한 아로마 마사지 제휴점 `,
+      `${locationPrefix} 지역 맞춤형 출장 서비스 타이 마사지 안내 | 모먼트레스트`,
+      `${locationPrefix} 전문 출장 방문 가능한 아로마 마사지 제휴점 · 모먼트레스트`,
       `${locationPrefix} 프라이빗 출장 홈케어 릴렉스 케어 마사지 추천 코스`,
       `${locationPrefix} 안심 출장 서비스 스웨디시 프로그램 마사지 1:1 안내`,
       `${locationPrefix} 신속 출장 배차 전신 힐링 테라피 마사지 24시 예약`,
       `${locationPrefix} 최고급 출장 테라피 딥티슈 바디 마사지 피로회복 가이드`,
-      `${locationPrefix} 정찰제 출장 방문 홈케어 바디 케어 마사지 정보 `,
-      `${locationPrefix} 맞춤형 출장 서비스 릴렉스 프로그램 마사지 안내 `,
+      `${locationPrefix} 정찰제 출장 방문 홈케어 바디 케어 마사지 정보 | 모먼트레스트`,
+      `${locationPrefix} 맞춤형 출장 서비스 릴렉스 프로그램 마사지 안내 · 모먼트레스트`,
       `${locationPrefix} 건식 및 출장 아로마 케어 마사지 제휴샵 총정리`,
       `${locationPrefix} 24시간 출장 방문 프리미엄 감성 테라피 마사지 플랫폼`,
       `${locationPrefix} 힐링 출장 서비스 순환 케어 전문 샵 마사지 가이드`,
@@ -81,7 +79,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${locationPrefix} 명품 방문 홈케어 출장 스웨디시 프로그램 정보`
     ];
 
-    // 디스크립션: '출장' 키워드 완전 제외, '마사지' 중심의 50가지 조합
     const descriptionVariants = [
       `${locationPrefix} 지역에서 쾌적하고 편안하게 즐길 수 있는 전문 마사지 제휴업체 정보와 상세한 프로그램 안내를 확인해보세요.`,
       `${locationPrefix} 인근에서 차별화된 힐링 마사지 코스를 찾고 계신다면 모먼트레스트가 엄선한 신뢰도 높은 제휴 요금표를 만나보세요.`,
@@ -122,17 +119,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${locationPrefix} 인근 마사지 숍 실시간 정보. 철저한 위생 관리와 편안한 힐링 코스를 모먼트레스트에서 만나보세요.`,
       `${locationPrefix} 지역 전문 마사지 제휴점 안내. 몸의 긴장을 부드럽게 풀어주는 릴렉스 바디 케어 프로그램입니다.`,
       `${locationPrefix} 맞춤형 감성 마사지 코스 소개. 일상 속 힐링을 책임질 전문 테라피스트들의 안내를 확인해 보세요.`,
-      `${locationPrefix} 인근 최고급 마사지 프로그램 안내. 나만을 위한 특별한 힐링 테라피를 지금 바로 경험해 보세요.`,
-      `${locationPrefix} 지역 맞춤형 마사지 서비스 정보와 쾌적한 힐링 제휴처 안내를 제공합니다.`,
-      `${locationPrefix} 인근에서 인기 있는 프리미엄 마사지 코스와 이용 요금을 확인해보세요.`,
-      `${locationPrefix} 전문 힐러들의 손길로 채워지는 릴렉스 마사지 프로그램 가이드.`,
-      `${locationPrefix} 안심하고 이용할 수 있는 정찰제 마사지 제휴 업소 모음.`,
-      `${locationPrefix} 지친 일상의 피로를 비워내는 전문 마사지 테라피 안내.`,
-      `${locationPrefix} 1:1 맞춤형 바디 케어 프로그램과 감성 마사지 정보.`,
-      `${locationPrefix} 품격 있는 휴식을 선사하는 마사지 제휴점 실시간 안내.`,
-      `${locationPrefix} 신속하고 편리하게 확인하는 마사지 코스별 상세 요금표.`,
-      `${locationPrefix} 몸과 마음의 안정을 찾아주는 프리미엄 마사지 테라피 가이드.`,
-      `${locationPrefix} 모먼트레스트가 엄선한 지역별 전문 마사지 제휴처 정보.`
+      `${locationPrefix} 인근 최고급 마사지 프로그램 안내. 나만을 위한 특별한 힐링 테라피를 지금 바로 경험해 보세요.`
     ];
 
     const finalTitle = titleVariants[variantIndex];
@@ -284,7 +271,7 @@ export default async function RegionalDongDetailPage({ params }: PageProps) {
         </section>
 
         <div className="text-center pt-2">
-          <Link href={`/massage/${region}/${encodeURIComponent(district)}`} className="text-xs text-gray-500 hover:text-pink-600 transition-colors font-semibold">
+          <Link href={`/massage/${region}/${encodeURIComponent(district)}`} className="text-xs text-gray-500 hover:text-pink-600 font-semibold transition-colors">
             ← {district} 메인 페이지로 돌아가기
           </Link>
         </div>
